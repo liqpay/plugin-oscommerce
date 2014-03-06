@@ -1,0 +1,15 @@
+Array
+(
+    [signature] => XHpZj6oDCZoVMrkIRtLbHbL5+Ww=
+    [sender_phone] => 380681761378
+    [transaction_id] => 2376
+    [status] => failure
+    [order_id] => 16#1392812623
+    [type] => buy
+    [description] => Order #16
+    [currency] => USD
+    [amount] => 25
+    [public_key] => i50376362498
+)
+
+success 5
