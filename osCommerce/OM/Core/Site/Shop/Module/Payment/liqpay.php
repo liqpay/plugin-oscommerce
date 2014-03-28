@@ -189,7 +189,7 @@ class liqpay extends \osCommerce\OM\Core\Site\Shop\PaymentModuleAbstract
         if ($currency == 'RUR') { $currency = 'RUB'; }
 
         echo '
-          <form method="POST" action="'.$action.'" id="liqpay">
+          <form method="POST" action="'.$action.'" id="liqpay" accept-charset="utf-8">
               <input type="hidden" name="public_key" value="'.$public_key.'" />
               <input type="hidden" name="amount" value="'.$amount.'" />
               <input type="hidden" name="currency" value="'.$currency.'" />
