@@ -45,28 +45,21 @@ class Server
     public static function execute(ApplicationAbstract $application)
     {
         $success =
-            isset($_POST['amount']) &&
-            isset($_POST['currency']) &&
-            isset($_POST['public_key']) &&
-            isset($_POST['description']) &&
-            isset($_POST['order_id']) &&
-            isset($_POST['type']) &&
-            isset($_POST['status']) &&
-            isset($_POST['transaction_id']) &&
-            isset($_POST['sender_phone']);
+            isset($_POST['data']) &&
+            isset($_POST['signature']);
 
         if (!$success) { die(); }
-
-        $amount = $_POST['amount'];
-        $currency = $_POST['currency'];
-        $public_key = $_POST['public_key'];
-        $description = $_POST['description'];
-        $order_id = $_POST['order_id'];
-        $type = $_POST['type'];
-        $status = $_POST['status'];
-        $transaction_id = $_POST['transaction_id'];
-        $sender_phone = $_POST['sender_phone'];
-        $insig = $_POST['signature'];
+        
+        $data                = $_POST['data'];
+        $parsed_data         = json_decode(base64_decode($data));
+        $received_signature  = $_POST['signature'];
+        $received_public_key = $parsed_data['public_key'];
+        $order_id            = $parsed_data['order_id'];
+        $status              = $parsed_data['status'];
+        $sender_phone        = $parsed_data['sender_phone'];
+        $amount              = $parsed_data['amount'];
+        $currency            = $parsed_data['currency'];
+        $transaction_id      = $parsed_data['transaction_id'];
 
         $real_order_id = explode('#', $order_id);
         $real_order_id = $real_order_id[0];
@@ -78,21 +71,11 @@ class Server
         if (!count($order->products)) { die(); }
 
         $private_key = MODULE_PAYMENT_LIQPAY_PRIVATE_KEY;
+        $public_key  = MODULE_PAYMENT_LIQPAY_PUBLIC_KEY;
 
-        $gensig = base64_encode(sha1(join('',compact(
-            'private_key',
-            'amount',
-            'currency',
-            'public_key',
-            'order_id',
-            'type',
-            'description',
-            'status',
-            'transaction_id',
-            'sender_phone'
-        )),1));
+        $generated_signature = base64_encode(sha1($private_key.$data.$private_key, 1));
 
-        if ($insig != $gensig) { die(); }
+        if ($received_signature != $generated_signature || $public_key != $received_public_key) { die(); }
 
         if ($status == 'success') {
             Order::process($real_order_id, MODULE_PAYMENT_LIQPAY_ORDER_STATUS_ID);

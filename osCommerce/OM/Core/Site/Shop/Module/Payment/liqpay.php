@@ -152,34 +152,38 @@ class liqpay extends \osCommerce\OM\Core\Site\Shop\PaymentModuleAbstract
         $amount = (float) $OSCOM_ShoppingCart->getTotal();
         $OSCOM_ShoppingCart->reset(true);
 
-        $action = MODULE_PAYMENT_LIQPAY_ACTION;
-        $public_key = MODULE_PAYMENT_LIQPAY_PUBLIC_KEY;
+        $action      = MODULE_PAYMENT_LIQPAY_ACTION;
+        $public_key  = MODULE_PAYMENT_LIQPAY_PUBLIC_KEY;
         $private_key = MODULE_PAYMENT_LIQPAY_PRIVATE_KEY;
-        $type = 'buy';
+        $type        = 'buy';
 
-        $order = new Order($this->_order_id);
+        $order       = new Order($this->_order_id);
 
-        $currency = $order->info['currency'];
-        $order_id = $this->_order_id;
+        $currency    = $order->info['currency'];
+        $order_id    = $this->_order_id;
         $description = 'Order #'.$order_id;
-        $result_url = OSCOM::getLink(null, 'Account&Orders');
-        $server_url = OSCOM::getLink(null, 'Liqpay&Server');;
+        $result_url  = OSCOM::getLink(null, 'Account&Orders');
+        $server_url  = OSCOM::getLink(null, 'Liqpay&Server');;
 
-        $order_id .= '#'.time();
+        $order_id   .= '#'.time();
 
-        $signature = base64_encode(sha1(join('',compact(
-            'private_key',
-            'amount',
-            'currency',
-            'public_key',
-            'order_id',
-            'type',
-            'description',
-            'result_url',
-            'server_url'
-        )),1));
+        $language    = 'ru';
+        $version     = '3';
 
-        $language = 'ru';
+        $data = base64_encode(
+                    json_encode(
+                            array('version'     => $version,
+                                  'public_key'  => $public_key,
+                                  'amount'      => $amount,
+                                  'currency'    => $currency,
+                                  'description' => $description,
+                                  'order_id'    => $order_id,
+                                  'type'        => $type,
+                                  'language'    => $language)
+                                )
+                            );
+
+        $signature = base64_encode(sha1($private_key.$data.$private_key, 1));
 
         if (!in_array($currency, $this->_allowCurrencyCode)) {
             echo 'Incorrect currency!';
@@ -190,16 +194,8 @@ class liqpay extends \osCommerce\OM\Core\Site\Shop\PaymentModuleAbstract
 
         echo '
           <form method="POST" action="'.$action.'" id="liqpay" accept-charset="utf-8">
-              <input type="hidden" name="public_key" value="'.$public_key.'" />
-              <input type="hidden" name="amount" value="'.$amount.'" />
-              <input type="hidden" name="currency" value="'.$currency.'" />
-              <input type="hidden" name="description" value="'.$description.'" />
-              <input type="hidden" name="order_id" value="'.$order_id.'" />
-              <input type="hidden" name="result_url" value="'.$result_url.'" />
-              <input type="hidden" name="server_url" value="'.$server_url.'" />
-              <input type="hidden" name="type" value="'.$type.'" />
               <input type="hidden" name="signature" value="'.$signature.'" />
-              <input type="hidden" name="language" value="'.$language.'" />
+              <input type="hidden" name="language" value="'.$data.'" />
           </form>
         ';
         exit;

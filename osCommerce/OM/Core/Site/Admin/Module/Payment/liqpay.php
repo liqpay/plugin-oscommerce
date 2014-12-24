@@ -142,7 +142,7 @@ class liqpay extends \osCommerce\OM\Core\Site\Admin\PaymentModuleAbstract
             array(
                 'title' => OSCOM::getDef('payment_liqpay_action'),
                 'key' => 'MODULE_PAYMENT_LIQPAY_ACTION',
-                'value' => 'https://www.liqpay.com/api/pay',
+                'value' => 'https://www.liqpay.com/api/checkout',
                 'description' => '',
                 'group_id' => '6',
             ),
