@@ -19,7 +19,7 @@
  * EXTENSION INFORMATION
  *
  * osCommerce       3.0.2
- * LiqPay API       https://www.liqpay.com/ru/doc
+ * LiqPay API       https://www.liqpay.ua/documentation/ru
  *
  */
  -->
@@ -47,7 +47,7 @@
     </definition>
     <definition>
       <key>payment_liqpay_public_key_desc</key>
-      <value><![CDATA[<a target="_blank" href="https://www.liqpay.com/admin/business">get public key</a>]]></value>
+      <value><![CDATA[<a target="_blank" href="https://www.liqpay.ua/admin/business">get public key</a>]]></value>
       <group>modules-payment</group>
     </definition>
     <definition>
@@ -57,7 +57,7 @@
     </definition>
     <definition>
       <key>payment_liqpay_private_key_desc</key>
-      <value><![CDATA[<a target="_blank" href="https://www.liqpay.com/admin/business">get private key</a>]]></value>
+      <value><![CDATA[<a target="_blank" href="https://www.liqpay.ua/admin/business">get private key</a>]]></value>
       <group>modules-payment</group>
     </definition>
     <definition>

@@ -18,7 +18,7 @@
  * EXTENSION INFORMATION
  *
  * osCommerce       3.0.2
- * LiqPay API       https://www.liqpay.com/ru/doc
+ * LiqPay API       https://www.liqpay.ua/documentation/ru
  *
  */
 
@@ -30,7 +30,7 @@ use osCommerce\OM\Core\OSCOM;
 /**
  * Controller liqpay
  *
- * @author      Liqpay <support@liqpay.com>
+ * @author      Liqpay <support@liqpay.ua>
  */
 class Controller extends \osCommerce\OM\Core\Site\Shop\ApplicationAbstract
 {

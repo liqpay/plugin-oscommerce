@@ -18,7 +18,7 @@
  * EXTENSION INFORMATION
  *
  * osCommerce       3.0.2
- * LiqPay API       https://www.liqpay.com/ru/doc
+ * LiqPay API       https://www.liqpay.ua/documentation/ru
  *
  */
 
@@ -30,7 +30,7 @@ use osCommerce\OM\Core\Registry;
 /**
  * Payment method liqpay module (admin)
  *
- * @author      Liqpay <support@liqpay.com>
+ * @author      Liqpay <support@liqpay.ua>
  */
 class liqpay extends \osCommerce\OM\Core\Site\Admin\PaymentModuleAbstract
 {
@@ -64,7 +64,7 @@ class liqpay extends \osCommerce\OM\Core\Site\Admin\PaymentModuleAbstract
      *
      * @var string
      */
-    protected $_author_www = 'http://liqpay.com';
+    protected $_author_www = 'http://liqpay.ua';
 
 
     /**
@@ -142,7 +142,7 @@ class liqpay extends \osCommerce\OM\Core\Site\Admin\PaymentModuleAbstract
             array(
                 'title' => OSCOM::getDef('payment_liqpay_action'),
                 'key' => 'MODULE_PAYMENT_LIQPAY_ACTION',
-                'value' => 'https://www.liqpay.com/api/checkout',
+                'value' => 'https://www.liqpay.ua/api/checkout',
                 'description' => '',
                 'group_id' => '6',
             ),
